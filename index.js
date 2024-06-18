@@ -119,9 +119,6 @@ app.post("/users/update", function (req, res) {
     newsletter,
   };
 
-  console.log(req.body);
-  console.log(userData);
-
   User.update(userData, {
     where: {
       id: id,
@@ -150,6 +147,18 @@ app.post("/address/create", function (req, res) {
   Address.create(address)
     .then(res.redirect(`/users/edit/${UserId}`))
     .catch((err) => console.log(err));
+});
+
+app.post("/address/delete", (req, res) => {
+  const UserId = req.body.UserId;
+  const id = req.body.id;
+  Address.destroy({
+    where: { id: id },
+  })
+    .then(res.redirect(`/users/edit/${UserId}`))
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 // Criar tabelas e rodar o app
